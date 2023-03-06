@@ -87,6 +87,10 @@ func App() *buffalo.App {
 		users.POST("/", UsersCreate)
 		users.Middleware.Remove(Authorize)
 
+		//Routes for Admin
+		app.GET("/admin", AdminIndex)
+		app.GET("/admin/index", AdminIndex)
+
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	})
 
