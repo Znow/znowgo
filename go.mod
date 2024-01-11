@@ -29,11 +29,13 @@ require (
 	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/gobuffalo/attrs v1.0.3 // indirect
 	github.com/gobuffalo/buffalo-plugins v1.15.0 // indirect
 	github.com/gobuffalo/events v1.4.3 // indirect
 	github.com/gobuffalo/fizz v1.14.4 // indirect
 	github.com/gobuffalo/flect v1.0.2 // indirect
 	github.com/gobuffalo/genny v0.6.0 // indirect
+	github.com/gobuffalo/genny/v2 v2.1.0 // indirect
 	github.com/gobuffalo/gitgen v0.0.0-20190315122116-cc086187d211 // indirect
 	github.com/gobuffalo/github_flavored_markdown v1.1.4 // indirect
 	github.com/gobuffalo/gogen v0.2.0 // indirect
@@ -73,6 +75,7 @@ require (
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/karrick/godirwalk v1.17.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/lib/pq v1.10.7 // indirect
 	github.com/luna-duclos/instrumentedsql v1.1.3 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/markbates/deplist v1.3.0 // indirect
