@@ -5,16 +5,88 @@
     <meta charset="utf-8">
     <title>Buffalo - Znowgo</title>
     <%= stylesheetTag("application.css") %>
+    <%= stylesheetTag("main.css") %>
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
   </head>
   <body>
 
-    <div class="container">
+    <div id="wrap">
+      <div id="site-header"></div>
+      <div id="body">
+          <div id="side-bar">
+              <div class="box" id="navigation">
+                  <div class="box-header"></div>
+                  <div class="content">
+                    <ul class="nav flex-column">
+                      <li class="nav-item">
+                          Home
+                      </li>
+                      <li class="nav-item">
+                        Blog
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="box" id="profile">
+                  <div class="box-header"></div>
+                  <div class="content">
+                      <ProfileMenu />
+                  </div>
+              </div>
+              <div class="box" id="something">
+                  <div class="box-header"></div>
+                  <div class="content">
+                      <span>More content will come...</span>
+                  </div>
+              </div>
+              <div class="box" id="shoutbox">
+                  <div class="box-header"></div>
+                  <div class="content">
+                    <div class="form-group">
+                      <label>
+                          User:
+                          <!-- <input @bind="userInput" /> -->
+                      </label>
+                  </div>
+                  <div class="form-group">
+                      <label>
+                          Message:
+                          <!-- <input @bind="messageInput" /> -->
+                      </label>
+                  </div>
+                  <!-- <button @onclick="Send" disabled="@(!IsConnected)">Send</button> -->
+                  
+                  <hr>
+                  
+                  <ul id="messagesList">
+                      
+                  </ul>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="box" id="content">
+              <div class="box-header"></div>
+              <div class="content">
+                  <%= yield %>
+                  @*&nbsp;<p align="center">&nbsp;</p><p align="center">&nbsp;</p><p align="center">&nbsp;</p>*@
+              </div>
+          </div>
+      </div>
+      <div id="iesucks"></div>
+      <div id="footer">
+          <p>Hacked in Go!</p>
+      </div>
+    </div>
+
+
+
+    <!-- <div class="container">
       <%= partial("flash.html") %>
       <%= yield %>
-    </div>
+    </div> -->
 
     <%= javascriptTag("application.js") %>
   </body>

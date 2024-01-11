@@ -11,6 +11,7 @@ const configurator = {
     var entries = {
       application: [
         './assets/css/application.scss',
+        './assets/css/main.scss',
       ],
     }
 
