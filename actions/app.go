@@ -73,8 +73,12 @@ func App() *buffalo.App {
 		app.Use(SetCurrentUser)
 		app.Use(Authorize)
 
+		// Allows to access / without being authenticated
+		app.Middleware.Skip(Authorize, HomeHandler)
+
 		//Routes for Auth
 		auth := app.Group("/auth")
+		
 		auth.GET("/", AuthLanding)
 		auth.GET("/new", AuthNew)
 		auth.POST("/", AuthCreate)
