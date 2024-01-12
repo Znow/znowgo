@@ -1,0 +1,5 @@
+<%= formFor(user, {action: authPath(), method: "POST"}) { %>
+  <%= f.InputTag("Email") %>
+  <%= f.InputTag("Password", {type: "password"}) %>
+  <button class="btn btn-success">Sign In!</button>
+<% } %>

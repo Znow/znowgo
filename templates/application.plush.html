@@ -31,7 +31,11 @@
               <div class="box" id="profile">
                   <div class="box-header"></div>
                   <div class="content">
-                      <ProfileMenu />
+                    <%= formFor(user, {action: authPath(), method: "POST"}) { %>
+                      <%= f.InputTag("Email") %>
+                      <%= f.InputTag("Password", {type: "password"}) %>
+                      <button class="btn btn-success">Sign In!</button>
+                    <% } %>
                   </div>
               </div>
               <div class="box" id="something">
