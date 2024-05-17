@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net/http"
-	"server/server/database"
-	"server/server/model"
+	"znowgo/server/controller"
+	"znowgo/server/database"
+	"znowgo/server/model"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -13,15 +14,7 @@ import (
 func main() {
 	loadEnv()
 	loadDatabase()
-
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	serveApplication()
 }
 
 func loadDatabase() {
@@ -35,4 +28,15 @@ func loadEnv() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+}
+
+func serveApplication() {
+	router := gin.Default()
+
+	publicRoutes := router.Group("/auth")
+	publicRoutes.POST("/register", controller.Register)
+	publicRoutes.POST("/login", controller.Login)
+
+	router.Run(":8000")
+	fmt.Println("Server running on port 8000")
 }
