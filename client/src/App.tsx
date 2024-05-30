@@ -22,13 +22,11 @@ function App() {
 
     event.preventDefault();
 
-    axios({
-      method: "POST",
-      url: `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
-      data: JSON.stringify(formData),
-      // headers: { "Content-Type": "multipart/form-data" },
-      headers: { "Content-Type": "application/json" },
-    })
+    axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/auth/register`, 
+      JSON.stringify(formData), 
+      { headers: { "Content-Type": "application/json" } }
+    )
     .then(function (response) {
       //handle success
       console.log(response);
