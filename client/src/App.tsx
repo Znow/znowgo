@@ -5,13 +5,14 @@ import axios from "axios";
 
 
 function App() {
+  const client = axios.create({
+    baseURL: `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+  });
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     errors: {},
   });
-
-  console.log(`${process.env.REACT_APP_API_BASE_URL}/auth/register`);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -22,7 +23,7 @@ function App() {
 
     event.preventDefault();
 
-    axios.post(
+    client.post(
       `${process.env.REACT_APP_API_BASE_URL}/auth/register`, 
       JSON.stringify(formData), 
       { headers: { "Content-Type": "application/json" } }
