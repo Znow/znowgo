@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"log"
 	"znowgo/server/controller"
 	"znowgo/server/database"
@@ -43,6 +44,15 @@ func serveApplication() {
 	protectedRoutes.POST("/entry", controller.AddEntry)
 	protectedRoutes.GET("/entries", controller.GetAllEntries)
 
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowCredentials = true
+	// config.AllowOrigins = []string{"http://google.com", "http://facebook.com"}
+	// config.AllowAllOrigins = true
+
+	router.Use(cors.New(config))
+
 	router.Run(":8000")
+
 	fmt.Println("Server running on port 8000")
 }

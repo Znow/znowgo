@@ -11,6 +11,7 @@ import (
 func Register(context *gin.Context) {
 	var input model.AuthenticationInput
 
+	//if err := context.Bind(&input); err != nil {
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
