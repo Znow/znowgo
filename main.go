@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-contrib/cors"
 	"log"
+	"os"
 	"znowgo/server/controller"
 	"znowgo/server/database"
 	"znowgo/server/middleware"
 	"znowgo/server/model"
+
+	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -35,6 +37,11 @@ func loadEnv() {
 func serveApplication() {
 	router := gin.Default()
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
 	publicRoutes.POST("/login", controller.Login)
@@ -52,7 +59,7 @@ func serveApplication() {
 
 	router.Use(cors.New(config))
 
-	router.Run(":8000")
+	router.Run(":" + port)
 
-	fmt.Println("Server running on port 8000")
+	fmt.Println("Server running on port " + port)
 }
