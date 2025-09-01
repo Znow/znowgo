@@ -8,3 +8,4 @@ go.sum
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+client/yarn.lock
