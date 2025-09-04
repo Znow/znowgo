@@ -67,6 +67,11 @@ function App() {
                   <div className="box-header"></div>
                   <div className="content">
                       {/* <NavMenu /> */}
+                      <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                      </ul>
                   </div>
               </div>
               <div className="box" id="profile">
@@ -138,7 +143,7 @@ function App() {
       </div>
       <div id="iesucks"></div>
       <div id="footer">
-        <p>Znow</p>
+        <span>Znow.dk</span>
       </div>
     </div>
   );
