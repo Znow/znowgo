@@ -1,26 +1,22 @@
-# Start from the latest Node.js base image
-FROM node:latest
-
-# Add Maintainer Info
-LABEL maintainer="Your Name <youremail@domain.com>"
-
-# Set the Current Working Directory inside the container
+FROM node:20-alpine AS development-dependencies-env
+COPY . /app
 WORKDIR /app
+RUN npm ci
 
-# Copy package.json and package-lock.json files
-COPY package*.json ./
+FROM node:20-alpine AS production-dependencies-env
+COPY ./package.json package-lock.json /app/
+WORKDIR /app
+RUN npm ci --omit=dev
 
-# Install all dependencies. Dependencies will be cached if the package.json and package-lock.json files are not changed
-RUN npm install
-
-# Copy the source from the current directory to the Working Directory inside the container
-COPY . .
-
-# Build the Node.js app
+FROM node:20-alpine AS build-env
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+WORKDIR /app
 RUN npm run build
 
-# Expose port 3000 to the outside world
-EXPOSE 3000
-
-# Command to run the server
-CMD ["npm", "start"]
+FROM node:20-alpine
+COPY ./package.json package-lock.json /app/
+COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+COPY --from=build-env /app/build /app/build
+WORKDIR /app
+CMD ["npm", "run", "start"]
