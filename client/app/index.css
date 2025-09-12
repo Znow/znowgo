@@ -7,7 +7,7 @@ body {
   padding: 0;
   font-size: 8pt;
   font-family: sans-serif;
-  background: #E9E9E9 url(../public/assets/bodybackground.jpg) top left repeat-x;
+  background: #E9E9E9 url(../assets/bodybackground.jpg) top left repeat-x;
   margin: 0;
   /* transform: scale(1.1);
   transform-origin: 0 0; */
@@ -68,12 +68,12 @@ h3 {
 #wrap {
   width: 812px;
   margin: 0 auto;
-  background: url(../public/assets/heading.jpg) top left no-repeat;
+  background: url(../assets/heading.jpg) top left no-repeat;
 }
 
 #body {
   min-height: 200px;
-  background: url(../public/assets/backboxcenter.jpg) top left repeat-y;
+  background: url(../assets/backboxcenter.jpg) top left repeat-y;
   padding: 0 12px 1px 12px;
 }
 
@@ -84,7 +84,7 @@ h3 {
 #footer {
   clear: both;
   height: 31px;
-  background: url(../public/assets/footer.png) top left no-repeat;
+  background: url(../assets/footer.png) top left no-repeat;
   text-align: center;
   padding-top: 8px;
 
@@ -113,11 +113,11 @@ h3 {
   width: 153px;
 
   .box {
-    background: url(../public/assets/barboxcenter.jpg) top left repeat-y;
+    background: url(../assets/barboxcenter.jpg) top left repeat-y;
 
     .content {
       padding: 2px 4px;
-      background: url(../public/assets/barboxfooter.jpg) bottom left no-repeat;
+      background: url(../assets/barboxfooter.jpg) bottom left no-repeat;
 
       input {
         border: 1px solid #ccc;
@@ -139,7 +139,7 @@ h3 {
 
 #navigation {
   .box-header {
-    background: url(../public/assets/boxhead_navigation.jpg) top left no-repeat;
+    background: url(../assets/boxhead_navigation.jpg) top left no-repeat;
   }
 
   .content {
@@ -168,39 +168,39 @@ h3 {
 
 #login {
   .box-header {
-    background: url(../public/assets/boxhead_login.jpg) top left no-repeat;
+    background: url(../assets/boxhead_login.jpg) top left no-repeat;
   }
 }
 
 #profile {
   .box-header {
-      background: url(../public/assets/boxhead_profile.jpg) top left no-repeat;
+      background: url(../assets/boxhead_profile.jpg) top left no-repeat;
   }
 }
 
 #shoutbox {
   .box-header {
-      background: url(../public/assets/boxhead_shoutbox.jpg) top left no-repeat;
+      background: url(../assets/boxhead_shoutbox.jpg) top left no-repeat;
   }
 }
 
 #something {
   .box-header {
-      background: url(../public/assets/boxhead_something.jpg) top left no-repeat;
+      background: url(../assets/boxhead_something.jpg) top left no-repeat;
   }
 }
 
 #content {
   margin-left: 155px;
-  background: url(../public/assets/contentboxcenter.jpg) top left repeat-y;
+  background: url(../assets/contentboxcenter.jpg) top left repeat-y;
 
   .box-header {
-      background: url(../public/assets/boxhead_content.jpg) 0px 0px no-repeat;
+      background: url(../assets/boxhead_content.jpg) 0px 0px no-repeat;
   }
 
   .content {
       padding: 2px 4px;
-      background: url(../public/assets/contentboxfooter.jpg) bottom left no-repeat;
+      background: url(../assets/contentboxfooter.jpg) bottom left no-repeat;
       min-height: 600px;
   }
 }
