@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-beasties-container>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Znow.dk</title>
+    <base href="/">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>html{margin:0;padding:0}body{padding:0;font-size:8pt;font-family:sans-serif;background:#e9e9e9 url("./media/bodybackground-XZIX3K6A.jpg") top left repeat-x;margin:0;zoom:1.2}a:link,a:visited,a:active{color:#3e5f7e;text-decoration:none}a:hover{color:#000;text-decoration:none}#site-header{margin:0;padding:0;height:151px}#wrap{width:812px;margin:0 auto;background:url("./media/heading-OU5PYLYZ.jpg") top left no-repeat}#body{min-height:200px;background:url("./media/backboxcenter-N4XXM6H6.jpg") top left repeat-y;padding:0 12px 1px}#iesucks{clear:both}#footer{clear:both;height:31px;background:url("./media/footer-34KQ6UOT.png") top left no-repeat;text-align:center;padding-top:8px}#footer span{font-size:10pt;color:#fff}#side-bar{float:left;width:153px}#content{margin-left:155px;background:url("./media/contentboxcenter-BGEHVGAT.jpg") top left repeat-y}</style><link rel="stylesheet" href="styles-HIIIEFEP.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-HIIIEFEP.css"></noscript></head>
+  <body>
+    <div id="wrap">
+      <div id="site-header"></div>
+        <div id="body">
+            <div id="side-bar">
+                <div classname="box" id="navigation">
+                    <div classname="box-header"></div>
+                    <div classname="content">
+                        <!-- <NavMenu /> -->
+                        <ul>
+                          <li><a href="#">Home</a></li>
+                          <li><a href="#">About</a></li>
+                          <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div classname="box" id="profile">
+                    <div classname="box-header"></div>
+                  <div classname="content">
+                    <form onsubmit="{handleOnLoginSubmit}" method="POST">
+                      <label>
+                        Username:
+                        <input type="text" name="username" value="{formData.username}" onchange="{handleChange}">
+                      </label>
+                      <label>
+                        Password:
+                        <input type="password" name="password" value="{formData.password}" onchange="{handleChange}">
+                      </label>
+                      <button type="submit">Create</button>
+                    </form>
+                  </div>
+                </div>
+              <div classname="box" id="something">
+                <div classname="box-header"></div>
+                <div classname="content">
+                  <span>More content will come...</span>
+                </div>
+              </div>
+              <div classname="box" id="shoutbox">
+                <div classname="box-header"></div>
+                <div classname="content">
+                  <!-- {/* <Shoutbox /> */} -->
+                </div>
+              </div>
+            </div>
+
+          <div classname="box" id="content">
+            <div classname="box-header"></div>
+            <div classname="content">
+              
+              <app-root></app-root>
+
+
+
+              <!-- <form onSubmit={handleOnSubmit} method='POST'>
+                <label>
+                  Username:
+                        <input
+                            type="text"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                        />
+                      </label>
+                      <label>
+                        Password:
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                      </label>
+                      <button type="submit">Create</button>
+                    </form> -->
+              </div>
+          </div>
+        </div>
+        <div id="iesucks"></div>
+        <div id="footer">
+          <span>Znow.dk</span>
+        </div>
+      </div>
+  <script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-T7M5RQ7X.js" type="module"></script></body>
+</html>
