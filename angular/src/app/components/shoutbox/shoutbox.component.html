@@ -1,0 +1,8 @@
+<input type="text" placeholder="Shout something..." />
+<button type="button">Shout</button>
+
+@for (shout of shouts; track shout) {
+  <div class="shout">
+    <span class="message">{{ shout.message }}</span>
+  </div>
+}

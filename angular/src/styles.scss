@@ -11,7 +11,7 @@ body {
   margin: 0;
   /* transform: scale(1.1);
   transform-origin: 0 0; */
-  zoom: 1.2;
+  zoom: 1.3;
 }
 
 a {
@@ -121,14 +121,20 @@ h3 {
 
       input {
         border: 1px solid #ccc;
-        padding: 4px;
+        padding: 2px;
         width: 100%;
         box-sizing: border-box;
+        font-size: 8pt;
 
         &:focus {
           border-color: #3E5F7E;
           outline: none;
         }
+      }
+
+      button {
+        font-size: 8pt;
+        margin-bottom: 4px;
       }
     }
     
@@ -149,16 +155,18 @@ h3 {
       padding: 0;
 
       li {
-        margin: 6px;
+        margin: 4px 6px;
         padding: 0;
 
         a {
           display: block;
           color: #333;
-          font-size: 10pt;
+          font-size: 8pt;
 
           &:hover {
             background: darken(#eee, 5%);
+            text-decoration: underline;
+            color: #3E5F7E;
           }
         }
       }
@@ -176,11 +184,19 @@ h3 {
   .box-header {
       background: url(../public/assets/boxhead_profile.jpg) top left no-repeat;
   }
+
+  input {
+    margin-bottom: 4px;
+  }
 }
 
 #shoutbox {
   .box-header {
       background: url(../public/assets/boxhead_shoutbox.jpg) top left no-repeat;
+  }
+
+  .content {
+    padding: 4px;
   }
 }
 
@@ -188,6 +204,7 @@ h3 {
   .box-header {
       background: url(../public/assets/boxhead_something.jpg) top left no-repeat;
   }
+
 }
 
 #content {

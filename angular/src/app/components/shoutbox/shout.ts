@@ -1,0 +1,3 @@
+type Shout = {
+  message: string;
+}

@@ -10,89 +10,13 @@
   <body>
     <div id="wrap">
       <div id="site-header"></div>
-        <div id="body">
-            <div id="side-bar">
-                <div class="box" id="navigation">
-                    <div class="box-header"></div>
-                    <div class="content">
-                        <!-- <NavMenu /> -->
-                        <ul>
-                          <li><a href="#">Home</a></li>
-                          <li><a href="#">About</a></li>
-                          <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="box" id="profile">
-                    <div class="box-header"></div>
-                  <div class="content">
-                    <form onSubmit={handleOnLoginSubmit} method='POST'>
-                      <label>
-                        Username:
-                        <input
-                            type="text"
-                            name="username"
-                        />
-                      </label>
-                      <label>
-                        Password:
-                        <input
-                            type="password"
-                            name="password"
-                        />
-                      </label>
-                      <button type="submit">Create</button>
-                    </form>
-                  </div>
-                </div>
-              <div class="box" id="something">
-                <div class="box-header"></div>
-                <div class="content">
-                  <span>More content will come...</span>
-                </div>
-              </div>
-              <div class="box" id="shoutbox">
-                <div class="box-header"></div>
-                <div class="content">
-                  <!-- {/* <Shoutbox /> */} -->
-                </div>
-              </div>
-            </div>
-
-          <div class="box" id="content">
-            <div class="box-header"></div>
-            <div class="content">
+      <div id="body">
+        <app-root></app-root>
               
-              <app-root></app-root>
-
-              <!-- <form onSubmit={handleOnSubmit} method='POST'>
-                <label>
-                  Username:
-                        <input
-                            type="text"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                        />
-                      </label>
-                      <label>
-                        Password:
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                        />
-                      </label>
-                      <button type="submit">Create</button>
-                    </form> -->
-              </div>
-          </div>
-        </div>
-        <div id="iesucks"></div>
-        <div id="footer">
-          <span>Znow.dk</span>
-        </div>
+      </div>
+      <div id="iesucks"></div>
+      <div id="footer">
+        <span>Znow.dk</span>
       </div>
   </body>
 </html>
