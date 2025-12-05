@@ -7,9 +7,13 @@ import { Component } from "@angular/core";
   standalone: true,
 })
 export class ShoutboxComponent {
-  shouts: Shout[] = [];
+  shouts: string[] = [];
+  message: string = "";
+  #shoutMessage!: any;
 
-  shout(message: string) {
-    this.shouts.push({ message });
+  shout() {
+    this.shouts.push(this.message );
+    this.message = "";
+    this.#shoutMessage.value = "";
   }
 }

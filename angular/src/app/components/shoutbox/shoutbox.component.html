@@ -1,8 +1,8 @@
-<input type="text" placeholder="Shout something..." />
-<button type="button">Shout</button>
+<input type="text" #shoutMessage (input)="message = $event.target.value" placeholder="Shout something..." />
+<button type="button" (click)="shout()">Shout</button>
 
 @for (shout of shouts; track shout) {
   <div class="shout">
-    <span class="message">{{ shout.message }}</span>
+    <span class="message">{{ shout }}</span>
   </div>
 }
