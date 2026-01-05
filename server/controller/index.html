@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MyPhotoshopper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #020617;
+      --panel: #020617;
+      --panel-soft: #020617;
+      --primary: #6366f1;
+      --primary-soft: rgba(99,102,241,0.14);
+      --primary-soft-strong: rgba(99, 102, 241, 0.25);
+      --accent: #22c55e;
+      --text-main: #e5e7eb;
+      --text-soft: #94a3b8;
+      --border-subtle: rgba(148,163,184,0.35);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 55px rgba(15,23,42,0.95);
+      --shadow-pill: 0 10px 30px rgba(15,23,42,0.9);
+      --blur-strong: blur(22px);
+      --transition-fast: 160ms ease-out;
+      --transition-med: 220ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1d2437, #020617 40%, #000 90%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1180px;
+      min-height: 92vh;
+      background: radial-gradient(circle at top left, rgba(99,102,241,0.16), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(34,197,94,0.12), transparent 60%),
+                  linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.98));
+      border-radius: 26px;
+      padding: 20px 22px;
+      border: 1px solid rgba(148,163,184,0.24);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: var(--blur-strong);
+    }
+
+    @media (max-width: 768px) {
+      .app-shell {
+        padding: 14px;
+        border-radius: 18px;
+        min-height: auto;
+      }
+    }
+
+    /* HEADER */
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 0%, #ffffff, #e5e7eb 38%, #6366f1 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #111827;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.7);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-text span:last-child {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .beta-pill {
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-soft);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.45);
+      font-size: 11px;
+      color: var(--text-soft);
+      box-shadow: var(--shadow-pill);
+    }
+
+    .top-pill strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #22c55e, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #020617;
+      box-shadow: 0 8px 24px rgba(34,197,94,0.55);
+    }
+
+    /* HERO STRIP */
+
+    .hero-strip {
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      background: radial-gradient(circle at 0 0, rgba(148,163,184,0.18), transparent 55%),
+                  linear-gradient(135deg, rgba(15,23,42,1), rgba(15,23,42,1));
+      border: 1px solid rgba(148,163,184,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-main h1 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-main p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tag span {
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+    }
+
+    .primary-button {
+      border: none;
+      outline: none;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 14% 0%, #ffffff, #c4d2ff 36%, #6366f1 85%);
+      color: #020617;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 14px 34px rgba(15,23,42,0.85);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter 120ms ease-out;
+      white-space: nowrap;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      filter: brightness(1.02);
+    }
+
+    .primary-button span.icon {
+      font-size: 16px;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--text-soft);
+      opacity: 0.85;
+    }
+
+    @media (max-width: 768px) {
+      .hero-strip {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-actions {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    /* MAIN GRID */
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.5fr;
+      gap: 14px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    @media (max-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* PANELS */
+
+    .panel {
+      background: radial-gradient(circle at top left, rgba(30,64,175,0.3), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(8,47,73,0.45), transparent 70%),
+                  linear-gradient(145deg, rgba(15,23,42,0.98), rgba(15,23,42,0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.37);
+      padding: 13px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-chip {
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--text-soft);
+      background: rgba(15,23,42,0.98);
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    /* FORM PANEL */
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .field-label strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .field-label span.hint {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .field-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .input,
+    .textarea,
+    .select,
+    .file-input {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      padding: 7px 10px;
+      background: rgba(15,23,42,0.88);
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease, background 150ms ease;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder {
+      color: rgba(148,163,184,0.9);
+    }
+
+    .textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .select:focus,
+    .file-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(99,102,241,0.5);
+      background: rgba(15,23,42,0.96);
+    }
+
+    .select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, rgba(148,163,184,0.8) 51%),
+                        linear-gradient(135deg, rgba(148,163,184,0.8) 50%, transparent 51%);
+      background-position: calc(100% - 15px) 53%, calc(100% - 10px) 53%;
+      background-size: 7px 7px, 7px 7px;
+      background-repeat: no-repeat;
+      padding-right: 30px;
+    }
+
+    .file-input {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .file-input span.icon {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .inline-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.52);
+      color: var(--text-soft);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .badge-primary {
+      border-color: rgba(99,102,241,0.9);
+      background: rgba(99,102,241,0.12);
+      color: #c7d2fe;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .form-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .form-meta strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .secondary-link-button {
+      border: none;
+      background: none;
+      color: var(--text-soft);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .secondary-link-button span.icon {
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .form-footer {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+    }
+
+    /* LIST PANEL */
+
+    .tabs {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.46);
+      padding: 2px;
+      background: rgba(15,23,42,0.94);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.95);
+    }
+
+    .tab {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition-med), color var(--transition-med), transform 120ms ease;
+    }
+
+    .tab span.count {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(148,163,184,0.55);
+    }
+
+    .tab.active {
+      background: radial-gradient(circle at 15% 0%, #ffffff, #c7d2fe 40%, #4f46e5 90%);
+      color: #020617;
+      transform: translateY(-0.5px);
+    }
+
+    .tab.active span.count {
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      border-color: rgba(15,23,42,0.8);
+    }
+
+    .list-container {
+      flex: 1;
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      min-height: 0;
+    }
+
+    .request-list {
+      flex: 1.05;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 290px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .request-card {
+      border-radius: 14px;
+      padding: 8px 9px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.35);
+      cursor: pointer;
+      display: flex;
+      gap: 8px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background 160ms ease, transform 110ms ease;
+      position: relative;
+    }
+
+    .request-card:hover {
+      border-color: rgba(148,163,184,0.8);
+      background: rgba(15,23,42,1);
+      box-shadow: 0 12px 32px rgba(15,23,42,0.9);
+      transform: translateY(-1px);
+    }
+
+    .request-card.selected {
+      border-color: rgba(129,140,248,1);
+      background: radial-gradient(circle at top left, rgba(129,140,248,0.22), transparent 58%),
+                  rgba(15,23,42,1);
+      box-shadow: 0 14px 38px rgba(15,23,42,1);
+    }
+
+    .thumb {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, #f9fafb, #e5e7eb 40%, #6d28d9 85%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .thumb .emoji {
+      filter: drop-shadow(0 4px 10px rgba(15,23,42,0.65));
+    }
+
+    .request-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .request-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .request-title {
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chip-status {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--accent);
+      background: rgba(21,128,61,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chip-status span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.4);
+    }
+
+    .request-desc {
+      font-size: 12px;
+      color: var(--text-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .request-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      margin-top: 3px;
+      color: var(--text-soft);
+    }
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+
+    .meta-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .avatar-small {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fb7185, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #020617;
+    }
+
+    .rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .rating span.star {
+      font-size: 13px;
+    }
+
+    .detail-panel {
+      flex: 1;
+      border-radius: 16px;
+      background: radial-gradient(circle at 0 0, rgba(148,163,184,0.12), transparent 60%),
+                  rgba(15,23,42,0.98);
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .detail-badges {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .detail-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--text-soft);
+      background: rgba(15,23,42,0.98);
+    }
+
+    .detail-body {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      max-height: 130px;
+      overflow-y: auto;
+      padding-right: 4px;
+      margin-top: 4px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .detail-item {
+      font-size: 11px;
+      color: var(--text-soft);
+      border-radius: 12px;
+      padding: 6px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .detail-item strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .detail-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-soft);
+      gap: 8px;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-outline {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 4px 9px;
+      background: rgba(15,23,42,0.96);
+      color: var(--text-soft);
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform 110ms ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(15,23,42,1);
+      border-color: rgba(148,163,184,0.95);
+      transform: translateY(-0.5px);
+    }
+
+    .btn-outline.primary {
+      border-color: rgba(129,140,248,1);
+      background: rgba(79,70,229,0.16);
+      color: #e0e7ff;
+    }
+
+    .btn-outline.primary:hover {
+      background: rgba(79,70,229,0.26);
+      box-shadow: 0 10px 26px rgba(15,23,42,0.9);
+    }
+
+    .detail-eta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .detail-eta span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    /* SCROLLBAR TWEAKS */
+
+    .request-list::-webkit-scrollbar,
+    .detail-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .request-list::-webkit-scrollbar-track,
+    .detail-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .request-list::-webkit-scrollbar-thumb,
+    .detail-body::-webkit-scrollbar-thumb {
+      background: rgba(148,163,184,0.42);
+      border-radius: 999px;
+    }
+
+    /* Toast */
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(15,23,42,0.96);
+      border-radius: 999px;
+      padding: 8px 14px;
+      border: 1px solid rgba(148,163,184,0.65);
+      font-size: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 250px;
+      max-width: 360px;
+      box-shadow: 0 16px 40px rgba(15,23,42,1);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease-out, transform 200ms ease-out;
+      backdrop-filter: blur(18px);
+      z-index: 30;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .toast-message strong {
+      color: #bbf7d0;
+      display: block;
+    }
+
+    .toast-message span {
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <span>MyPhotoshopper <span class="beta-pill">Preview</span></span>
+          <span>Post edits · Get help · Collaborate</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="top-pill">
+          <span class="badge-dot"></span>
+          <span>3 editors online</span>
+          <strong>Instant picks</strong>
+        </div>
+        <div class="avatar">DG</div>
+      </div>
+    </header>
+
+    <!-- Hero strip -->
+    <section class="hero-strip">
+      <div class="hero-main">
+        <h1>Turn rough photos into polished images.</h1>
+        <p>Describe your edit, attach a photo, and let the community of editors work their magic.</p>
+        <div class="hero-tags">
+          <div class="hero-tag"><span>✨</span> Before / after previews</div>
+          <div class="hero-tag"><span>⏱</span> Typical turnaround &lt; 24h</div>
+          <div class="hero-tag"><span>🤝</span> Built for simple collaboration</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="primary-button" id="heroNewRequest">
+          <span class="icon">➕</span>
+          <span>New edit request</span>
+        </button>
+        <span class="hero-note">No signup required to preview — try a demo request.</span>
+      </div>
+    </section>
+
+    <!-- Main grid -->
+    <main class="main-grid">
+      <!-- Left: Create request -->
+      <section class="panel" id="createPanel">
+        <div class="panel-header">
+          <div class="panel-title">
+            New edit request
+            <span class="panel-chip">Step 1 · Describe</span>
+          </div>
+        </div>
+        <p class="panel-subtitle">Share what you’d like fixed, enhanced, or transformed. Clear requests get better results.</p>
+
+        <form class="form" id="requestForm">
+          <div class="field-group">
+            <div class="field-label">
+              <strong>Request title</strong>
+              <span class="hint">Keep it short and clear</span>
+            </div>
+            <input class="input" name="title" placeholder="Remove background and brighten the colors" required />
+          </div>
+
+          <div class="field-group">
+            <div class="field-label">
+              <strong>Details for the editor</strong>
+              <span class="hint">What exactly should change?</span>
+            </div>
+            <textarea class="textarea" name="description" placeholder="Example: Please remove the people in the background and make the sky more vivid. Keep our skin tones natural and remove any harsh shadows." required></textarea>
+            <div class="inline-badges">
+              <span class="badge badge-primary">✔ Remove objects</span>
+              <span class="badge">✔ Color grading</span>
+              <span class="badge">✔ Retouching</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group" style="flex: 1.1">
+              <div class="field-label">
+                <strong>Style</strong>
+                <span class="hint">Optional</span>
+              </div>
+              <select class="select" name="style">
+                <option value="">No preference</option>
+                <option>Natural & realistic</option>
+                <option>Bright & colorful</option>
+                <option>Moody & cinematic</option>
+                <option>Black & white</option>
+              </select>
+            </div>
+            <div class="field-group" style="flex: 0.9">
+              <div class="field-label">
+                <strong>Deadline</strong>
+                <span class="hint">Optional</span>
+              </div>
+              <select class="select" name="deadline">
+                <option>Whenever is fine</option>
+                <option>In 4 hours</option>
+                <option>Today</option>
+                <option>Tomorrow</option>
+                <option>This week</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group" style="flex: 1">
+              <div class="field-label">
+                <strong>Attach images</strong>
+                <span class="hint">JPG · PNG · up to 10MB</span>
+              </div>
+              <button type="button" class="file-input">
+                <span class="icon">📎</span>
+                <span>Drop files or browse…</span>
+              </button>
+            </div>
+            <div class="field-group" style="width: 38%">
+              <div class="field-label">
+                <strong>Budget</strong>
+                <span class="hint">Optional</span>
+              </div>
+              <input class="input" name="budget" placeholder="e.g. €10" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <div class="field-label">
+              <strong>Reference link</strong>
+              <span class="hint">Optional (Pinterest, IG, examples…)</span>
+            </div>
+            <input class="input" name="reference" placeholder="https://… (optional)" />
+          </div>
+
+          <div class="form-footer">
+            <div class="form-meta">
+              <span><strong>Tip:</strong> Editors love specifics — mention what to keep & what to change.</span>
+              <button type="button" class="secondary-link-button" id="loadDemo">
+                <span class="icon">✨</span>
+                <span>Fill with a demo request</span>
+              </button>
+            </div>
+            <button class="primary-button" type="submit">
+              <span class="icon">📤</span>
+              <span>Post request</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right: Requests & detail -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            Open requests
+            <span class="panel-chip">Step 2 · Pick & edit</span>
+          </div>
+          <div class="tabs">
+            <button class="tab active" data-tab="open">
+              Open
+              <span class="count" id="openCount">3</span>
+            </button>
+            <button class="tab" data-tab="mine">
+              My requests
+              <span class="count" id="myCount">1</span>
+            </button>
+          </div>
+        </div>
+        <p class="panel-subtitle">Browse what people need edited. Click a card to see full details and claim the work.</p>
+
+        <div class="list-container">
+          <div class="request-list" id="requestList">
+            <!-- Cards injected by JS -->
+          </div>
+
+          <aside class="detail-panel" id="detailPanel">
+            <div class="detail-header">
+              <div>
+                <div class="detail-title" id="detailTitle">Select a request to see details</div>
+                <div class="detail-badges">
+                  <span class="detail-badge">No request selected</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-body" id="detailBody">
+              Click any request on the left to view a full description, example images, and what the requester cares
+              about most. From there you can decide if you want to take it on.
+            </div>
+            <div class="detail-grid">
+              <div class="detail-item">
+                <strong>Deadline</strong>
+                <span id="detailDeadline">—</span>
+              </div>
+              <div class="detail-item">
+                <strong>Budget</strong>
+                <span id="detailBudget">—</span>
+              </div>
+              <div class="detail-item">
+                <strong>Style</strong>
+                <span id="detailStyle">—</span>
+              </div>
+              <div class="detail-item">
+                <strong>Attachments</strong>
+                <span id="detailAttachments">—</span>
+              </div>
+            </div>
+            <div class="detail-footer">
+              <div class="detail-eta">
+                <span class="dot"></span>
+                <span id="detailStatus">Waiting for an editor</span>
+              </div>
+              <div class="detail-actions">
+                <button class="btn-outline" id="askQuestionBtn">
+                  💬 Ask a question
+                </button>
+                <button class="btn-outline primary" id="takeRequestBtn">
+                  ✅ Take this request
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <div class="toast-icon">✅</div>
+    <div class="toast-message">
+      <strong>Request added</strong>
+      <span>Your edit request is now visible in the “Open” list.</span>
+    </div>
+  </div>
+
+  <script>
+    // Simple in-memory data for demo
+    const requests = [
+      {
+        id: 1,
+        title: "Remove background + brighten colors",
+        description:
+          "Please cut out the subject and place it on a clean white background. Boost overall brightness and saturation a bit, but keep skin tones natural. Remove small dust spots on the jacket.",
+        style: "Bright & colorful",
+        deadline: "Today",
+        budget: "€15",
+        attachments: "1 portrait photo",
+        owner: "Lisa",
+        ownerInitials: "L",
+        rating: "4.9",
+        status: "Open",
+        createdAgo: "14 min ago",
+        type: "Portrait retouch"
+      },
+      {
+        id: 2,
+        title: "Wedding photo clean-up",
+        description:
+          "We had people walking in the background. Please remove them from 3 photos and soften the lighting a bit. Keep it realistic, no heavy filters.",
+        style: "Natural & realistic",
+        deadline: "This week",
+        budget: "€40",
+        attachments: "3 wedding photos",
+        owner: "Maria",
+        ownerInitials: "M",
+        rating: "4.8",
+        status: "Open",
+        createdAgo: "1 hr ago",
+        type: "Event / wedding"
+      },
+      {
+        id: 3,
+        title: "Product photo for online shop",
+        description:
+          "Need the mug on a perfectly white background with a slight shadow below. Please correct the perspective so the mug looks straight and sharpen the logo on it.",
+        style: "Clean product shot",
+        deadline: "Tomorrow",
+        budget: "€25",
+        attachments: "2 product photos",
+        owner: "Daniel",
+        ownerInitials: "D",
+        rating: "5.0",
+        status: "Open",
+        createdAgo: "3 hrs ago",
+        type: "Product / ecommerce"
+      }
+    ];
+
+    let selectedRequestId = null;
+
+    const requestListEl = document.getElementById("requestList");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailBody = document.getElementById("detailBody");
+    const detailDeadline = document.getElementById("detailDeadline");
+    const detailBudget = document.getElementById("detailBudget");
+    const detailStyle = document.getElementById("detailStyle");
+    const detailAttachments = document.getElementById("detailAttachments");
+    const detailStatus = document.getElementById("detailStatus");
+    const takeRequestBtn = document.getElementById("takeRequestBtn");
+    const askQuestionBtn = document.getElementById("askQuestionBtn");
+    const openCountEl = document.getElementById("openCount");
+    const myCountEl = document.getElementById("myCount");
+    const toastEl = document.getElementById("toast");
+    const heroNewRequestBtn = document.getElementById("heroNewRequest");
+    const loadDemoBtn = document.getElementById("loadDemo");
+    const formEl = document.getElementById("requestForm");
+
+    function renderList() {
+      requestListEl.innerHTML = "";
+      openCountEl.textContent = requests.length;
+      myCountEl.textContent = "1"; // pretend current user has 1
+
+      requests.forEach((req) => {
+        const card = document.createElement("article");
+        card.className = "request-card";
+        card.dataset.id = req.id;
+
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        thumb.innerHTML = `<span class="emoji">🖼️</span>`;
+
+        const main = document.createElement("div");
+        main.className = "request-main";
+
+        const titleRow = document.createElement("div");
+        titleRow.className = "request-title-row";
+
+        const title = document.createElement("div");
+        title.className = "request-title";
+        title.textContent = req.title;
+
+        const statusChip = document.createElement("span");
+        statusChip.className = "chip-status";
+        statusChip.innerHTML = `<span class="dot"></span>Open`;
+
+        titleRow.appendChild(title);
+        titleRow.appendChild(statusChip);
+
+        const desc = document.createElement("div");
+        desc.className = "request-desc";
+        desc.textContent = req.description;
+
+        const metaRow = document.createElement("div");
+        metaRow.className = "request-meta-row";
+
+        const metaLeft = document.createElement("div");
+        metaLeft.className = "meta-left";
+        metaLeft.innerHTML = `
+          <span class="meta-pill">${req.type}</span>
+          <span>${req.deadline}</span>
+        `;
+
+        const metaRight = document.createElement("div");
+        metaRight.className = "meta-right";
+        metaRight.innerHTML = `
+          <div class="avatar-small">${req.ownerInitials}</div>
+          <div class="rating">
+            <span class="star">⭐</span>
+            <span>${req.rating}</span>
+          </div>
+        `;
+
+        metaRow.appendChild(metaLeft);
+        metaRow.appendChild(metaRight);
+
+        main.appendChild(titleRow);
+        main.appendChild(desc);
+        main.appendChild(metaRow);
+
+        card.appendChild(thumb);
+        card.appendChild(main);
+
+        card.addEventListener("click", () => selectRequest(req.id));
+
+        requestListEl.appendChild(card);
+      });
+    }
+
+    function selectRequest(id) {
+      selectedRequestId = id;
+      [...requestListEl.children].forEach((card) => {
+        card.classList.toggle("selected", Number(card.dataset.id) === id);
+      });
+      const req = requests.find((r) => r.id === id);
+      if (!req) return;
+
+      detailTitle.textContent = req.title;
+      detailBody.textContent = req.description;
+      detailDeadline.textContent = req.deadline;
+      detailBudget.textContent = req.budget || "Not specified";
+      detailStyle.textContent = req.style || "No specific style";
+      detailAttachments.textContent = req.attachments || "Not specified";
+      detailStatus.textContent = `Posted by ${req.owner} · ${req.createdAgo}`;
+    }
+
+    function showToast() {
+      toastEl.classList.add("visible");
+      setTimeout(() => {
+        toastEl.classList.remove("visible");
+      }, 2600);
+    }
+
+    takeRequestBtn.addEventListener("click", () => {
+      if (!selectedRequestId) {
+        alert("Select a request first.");
+        return;
+      }
+      const req = requests.find((r) => r.id === selectedRequestId);
+      if (!req) return;
+      showToast();
+      toastEl.querySelector("strong").textContent = "Request accepted";
+      toastEl.querySelector("span").textContent =
+        `You’ve taken "${req.title}". Coordinate edits with the requester.`;
+    });
+
+    askQuestionBtn.addEventListener("click", () => {
+      if (!selectedRequestId) {
+        alert("Select a request first.");
+        return;
+      }
+      const req = requests.find((r) => r.id === selectedRequestId);
+      if (!req) return;
+      alert(`You would send a message to ${req.owner} about "${req.title}". (Mocked UI)`);
+    });
+
+    // Tabs – only visual for now
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+        // In a real app we’d filter by owner here.
+      });
+    });
+
+    heroNewRequestBtn.addEventListener("click", () => {
+      document.getElementById("createPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    loadDemoBtn.addEventListener("click", () => {
+      formEl.title.value = "Turn a casual phone shot into a clean LinkedIn headshot";
+      formEl.description.value =
+        "Please remove the messy background and replace it with a subtle gradient or soft office-style background. Smooth out small skin imperfections, even out lighting, and keep it looking like me (no heavy filters). Also remove the logo from my t-shirt.";
+      formEl.style.value = "Natural & realistic";
+      formEl.deadline.value = "Tomorrow";
+      formEl.budget.value = "€20";
+      formEl.reference.value = "";
+    });
+
+    formEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(formEl);
+      const title = formData.get("title").toString().trim();
+      const description = formData.get("description").toString().trim();
+      if (!title || !description) return;
+
+      const newReq = {
+        id: Date.now(),
+        title,
+        description,
+        style: formData.get("style").toString(),
+        deadline: formData.get("deadline").toString() || "Whenever is fine",
+        budget: formData.get("budget").toString(),
+        attachments: "Uploaded images",
+        owner: "You",
+        ownerInitials: "U",
+        rating: "New",
+        status: "Open",
+        createdAgo: "Just now",
+        type: "Custom request"
+      };
+      requests.unshift(newReq);
+      formEl.reset();
+      renderList();
+      selectRequest(newReq.id);
+      toastEl.querySelector("strong").textContent = "Request added";
+      toastEl.querySelector("span").textContent =
+        "Your edit request is now visible in the “Open” list.";
+      showToast();
+    });
+
+    // Initial render
+    renderList();
+    if (requests[0]) selectRequest(requests[0].id);
+  </script>
+</body>
+</html>

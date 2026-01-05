@@ -26,6 +26,8 @@ func (user *User) Save() (*User, error) {
 
 func (user *User) BeforeSave(*gorm.DB) error {
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+
+	
 	if err != nil {
 		return err
 	}
