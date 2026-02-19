@@ -36,13 +36,13 @@ services:
       db:
         condition: service_healthy
 
-  client:
+  angular:
     build:
-      context: ./client
+      context: ./angular
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "${CLIENT_PORT:-3000}:3000"
+      - "${CLIENT_PORT:-4200}:4200"
     depends_on:
       - backend
 
