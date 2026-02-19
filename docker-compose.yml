@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-P@ssw0rd}
+      POSTGRES_DB: ${DB_NAME:-znowgo}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-znowgo}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    environment:
+      DB_HOST: db
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-P@ssw0rd}
+      DB_NAME: ${DB_NAME:-znowgo}
+      DB_PORT: "5432"
+      PORT: "8080"
+      TOKEN_TTL: ${TOKEN_TTL:-2000}
+      JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY:-THIS_IS_NOT_SO_SECRET+YOU_SHOULD_DEFINITELY_CHANGE_IT}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      GIN_MODE: release
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "${CLIENT_PORT:-3000}:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

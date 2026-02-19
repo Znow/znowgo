@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"znowgo/server/controller"
 	"znowgo/server/database"
 	"znowgo/server/middleware"
@@ -30,7 +31,7 @@ func loadDatabase() {
 func loadEnv() {
 	err := godotenv.Load(".env.local")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("No .env.local file found, using environment variables")
 	}
 }
 
@@ -52,10 +53,13 @@ func serveApplication() {
 	protectedRoutes.GET("/entries", controller.GetAllEntries)
 
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
-	config.AllowCredentials = true
-	// config.AllowOrigins = []string{"http://google.com", "http://facebook.com"}
-	// config.AllowAllOrigins = true
+	corsOrigins := os.Getenv("CORS_ORIGINS")
+	if corsOrigins == "" || corsOrigins == "*" {
+		config.AllowAllOrigins = true
+	} else {
+		config.AllowOrigins = strings.Split(corsOrigins, ",")
+		config.AllowCredentials = true
+	}
 
 	router.Use(cors.New(config))
 
