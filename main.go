@@ -29,7 +29,7 @@ func loadDatabase() {
 }
 
 func loadEnv() {
-	err := godotenv.Load(".env.local")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("No .env.local file found, using environment variables")
 	}
