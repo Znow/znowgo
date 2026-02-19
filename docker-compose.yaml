@@ -20,14 +20,14 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "${BACKEND_PORT:-8080}:8080"
+      - "${BACKEND_PORT:-8081}:8081"
     environment:
       DB_HOST: db
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-P@ssw0rd}
       DB_NAME: ${DB_NAME:-znowgo}
       DB_PORT: "5432"
-      PORT: "8080"
+      PORT: "8081"
       TOKEN_TTL: ${TOKEN_TTL:-2000}
       JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY:-THIS_IS_NOT_SO_SECRET+YOU_SHOULD_DEFINITELY_CHANGE_IT}
       CORS_ORIGINS: ${CORS_ORIGINS:-*}
