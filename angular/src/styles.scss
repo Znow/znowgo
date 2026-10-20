@@ -1,3 +1,5 @@
+$zoom: 1.3;
+
 html {
   margin: 0;
   padding: 0;
@@ -11,7 +13,7 @@ body {
   margin: 0;
   /* transform: scale(1.1);
   transform-origin: 0 0; */
-  zoom: 1.3;
+  zoom: $zoom;
 }
 
 a {
@@ -218,7 +220,9 @@ h3 {
   .content {
       padding: 2px 4px;
       background: url(../public/assets/contentboxfooter.jpg) bottom left no-repeat;
-      min-height: 600px;
+      /* Fill the viewport: 229px = site header (151) + box header (32) + content padding (4)
+         + box margin (2) + body padding (1) + footer (39). vh is divided by the body zoom. */
+      min-height: max(600px, calc(100vh / #{$zoom} - 229px));
   }
 }
 /*Overrides*/
